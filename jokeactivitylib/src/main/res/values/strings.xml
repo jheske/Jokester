@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Joke Activity Lib</string>
+    <string name="joke_text">The joke goes here!</string>
+</resources>
