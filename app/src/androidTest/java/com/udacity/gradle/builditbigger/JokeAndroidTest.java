@@ -11,11 +11,6 @@ import android.util.Log;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-/**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
- * https://github.com/astuetz/build-it-bigger/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/GetJokeTaskTest.java
- * https://github.com/bdiegel/android-nano-p4/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/JokeAsyncTaskTest.java
- */
 public class JokeAndroidTest extends AndroidTestCase
         implements FetchJokesTask.jokeTaskListener {
     private final String TAG=getClass().getSimpleName();

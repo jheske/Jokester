@@ -1,18 +1,26 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
+
+import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-import com.udacity.gradle.builditbigger.AdListener;
-import com.udacity.gradle.builditbigger.R;
+import com.google.android.gms.ads.InterstitialAd;
 
 import java.lang.Override;
 
 /**
  * This version displays ads.
+ * https://github.com/googleads/googleads-mobile-android-examples/tree/master/admob/InterstitialExample
  */
-public class AdHandler implements AdListener {
+public class AdHandler implements AdCallbackListener {
+    private final static String TAG= "AdCallbackListener";
+    private final String AD_UNIT_ID = "ca-app-pub-3940256099942544/1033173712";
+
+    InterstitialAd mInterstitialAd;
+    IAdClosedListener mCallback;
 
     /**
      * Freebies get the banner ad.
@@ -28,5 +36,53 @@ public class AdHandler implements AdListener {
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         mAdView.loadAd(adRequest);
+    }
+
+    @Override
+    public void loadInterstitialAd(Context context) {
+        mCallback = (IAdClosedListener) context;
+        mInterstitialAd = new InterstitialAd(context);
+        mInterstitialAd.setAdUnitId(AD_UNIT_ID);
+        mInterstitialAd.setAdListener(new AdListener() {
+            //Done with this ad; load a new one for next time
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitialAd();
+                mCallback.onInterstitialAdClosed();
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                Log.d(TAG, "InterstitialAd load OK");
+            }
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                Log.d(TAG, "InterstitialAd load FAILED with error code " + errorCode);
+            }
+        });
+        requestNewInterstitialAd();
+    }
+
+    @Override
+    public void displayInterstitialAd() {
+        if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        }
+        else
+            //If there's no ad, then notify the app so it can
+            //display the joke anyway.  ??This will probably only happen
+            //if there's no internet connection??
+            mCallback.onInterstitialAdClosed();
+      }
+
+    public void requestNewInterstitialAd() {
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
     }
 }

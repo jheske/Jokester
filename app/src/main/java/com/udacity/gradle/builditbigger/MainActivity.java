@@ -1,9 +1,6 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
 import android.content.Intent;
-import android.support.v4.util.Pair;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -11,18 +8,35 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.JokeTeller;
 import com.example.jill.jokeactivitylib.JokeActivity;
 
+/**
+ * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
+ * https://developers.google.com/admob/android/interstitial
+ * https://github.com/googleads/googleads-mobile-android-examples/tree/master/admob/InterstitialExample
+ * https://github.com/bdiegel/android-nano-p4/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/JokeAsyncTaskTest.java
+ */
 public class MainActivity extends AppCompatActivity
-        implements FetchJokesTask.jokeTaskListener {
+        implements FetchJokesTask.jokeTaskListener,IAdClosedListener {
 
+    public String mJoke;
     public final String JOKE_EXTRA = "JOKE_EXTRA";
+    private AdHandler mAdHandler;
 
+    //https://developers.google.com/admob/android/interstitial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //All flavors have an AdHandler. Free version loads an
+        //ad while Paid version provides the event hooks but does nothing.
+        mAdHandler = new AdHandler();
+        //As per Android docs pre-load the ad for later display
+        //Delegate to all flavors; free version loads an ad and
+        //paid version doesn't so as not to waste time
+        //loading ads user paid to remove
+        mAdHandler.loadInterstitialAd(this);
     }
 
 
@@ -51,15 +65,33 @@ public class MainActivity extends AppCompatActivity
         new FetchJokesTask(this).execute();
     }
 
+    /**
+     * Don't show the joke right away.  Give all flavors
+     * of the app a chance to display an Interstitial ad (Free version)
+     * or not (Paid version)
+     *
+     * @param joke
+     */
     @Override
     public void onJokeReceived(String joke) {
-        Intent myIntent = new Intent(this, JokeActivity.class);
-        myIntent.putExtra(JOKE_EXTRA, joke);
-        startActivity(myIntent);
+        mJoke = joke;
+        mAdHandler.displayInterstitialAd();
     }
 
     @Override
     public void onError() {
         Toast.makeText(this, "Error retrieving joke from Google Endpoint", Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Finally, display the joke. Paid users will get a good joke,
+     * while Free users get a crappy one.  Hey, it's a JOKE app,
+     * after all!!
+     */
+    @Override
+    public void onInterstitialAdClosed() {
+        Intent myIntent = new Intent(this, JokeActivity.class);
+        myIntent.putExtra(JOKE_EXTRA, mJoke);
+        startActivity(myIntent);
     }
 }
