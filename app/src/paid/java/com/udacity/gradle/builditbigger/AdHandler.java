@@ -3,11 +3,6 @@ package com.udacity.gradle.builditbigger;
 import android.content.Context;
 import android.view.View;
 
-import com.udacity.gradle.builditbigger.AdListener;
-import com.udacity.gradle.builditbigger.Utils;
-import java.lang.Override;
-
-
 public class AdHandler implements AdListener {
 
     /**
@@ -18,7 +13,6 @@ public class AdHandler implements AdListener {
      * @param root
      */
     @Override
-    public void displayBannerAd(Context context, View root) {
-        Utils.showToast(context,"Hooray, no ads!");
+    public void displayBannerAd(View root) {
     }
 }

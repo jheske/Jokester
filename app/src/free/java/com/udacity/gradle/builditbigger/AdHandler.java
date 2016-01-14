@@ -19,7 +19,7 @@ public class AdHandler implements AdListener {
      * @param root  View created by MainActivityFragment
      */
     @Override
-    public void displayBannerAd(Context context, View root) {
+    public void displayBannerAd(View root) {
         AdView mAdView = (AdView) root.findViewById(R.id.adView);
         // Create an ad request. Check logcat output for the hashed device ID to
         // get test ads on a physical device. e.g.
