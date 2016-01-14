@@ -16,21 +16,22 @@ import java.util.concurrent.TimeUnit;
  * https://github.com/astuetz/build-it-bigger/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/GetJokeTaskTest.java
  * https://github.com/bdiegel/android-nano-p4/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/JokeAsyncTaskTest.java
  */
-public class JokeAndroidTest extends AndroidTestCase implements EndpointsAsyncTask.jokeTaskListener {
+public class JokeAndroidTest extends AndroidTestCase
+        implements FetchJokesTask.jokeTaskListener {
     private final String TAG=getClass().getSimpleName();
     CountDownLatch signal;
-    EndpointsAsyncTask jokeTask;
+    FetchJokesTask jokeTask;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
         signal = new CountDownLatch(1);
-        jokeTask = new EndpointsAsyncTask(this);
+        jokeTask = new FetchJokesTask(this);
     }
 
     @UiThreadTest
     public void testGetJoke() throws InterruptedException {
-        new EndpointsAsyncTask(this).execute();
+        new FetchJokesTask(this).execute();
         signal.await(30, TimeUnit.SECONDS);
     }
 

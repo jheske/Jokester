@@ -1,24 +1,18 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v4.util.Pair;
 
-import com.example.jill.jokeactivitylib.JokeActivity;
 import com.example.jill.myapplication.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.extensions.android.json.AndroidJsonFactory;
-import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
-import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
 import java.io.IOException;
 
 /**
- * Created by jill on 1/11/16.
+ * Created by jill on 1/13/16.
  */
-//class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
-class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
+public class FetchJokesTask extends AsyncTask<Void, Void, String> {
 
     public interface jokeTaskListener {
         void onJokeReceived(String joke);
@@ -30,14 +24,14 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
     private jokeTaskListener mCallback;
 
 
-    public EndpointsAsyncTask(jokeTaskListener callback) {
+    public FetchJokesTask (jokeTaskListener callback) {
         mCallback = callback;
     }
 
     @Override
     protected String doInBackground(Void... params) {
         if(myApiService == null) {  // Only do this once
-           // This one is for testing against local backend server
+            // This one is for testing against local backend server
        /*     MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                 // options for running against local devappserver
@@ -53,7 +47,7 @@ class EndpointsAsyncTask extends AsyncTask<Void, Void, String> {
             // This one is for testing against GoogleApps backend server
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(), new AndroidJsonFactory(), null)
                     .setRootUrl("https://builditbiggerbackend.appspot.com/_ah/api/");
-                // end options for devappserver
+            // end options for devappserver
 
             myApiService = builder.build();
         }

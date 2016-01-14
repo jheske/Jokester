@@ -15,7 +15,7 @@ import com.example.JokeTeller;
 import com.example.jill.jokeactivitylib.JokeActivity;
 
 public class MainActivity extends AppCompatActivity
-        implements EndpointsAsyncTask.jokeTaskListener {
+        implements FetchJokesTask.jokeTaskListener {
 
     public final String JOKE_EXTRA = "JOKE_EXTRA";
 
@@ -47,8 +47,8 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
-    public void launchLibraryActivity(View view) {
-        new EndpointsAsyncTask(this).execute();
+    public void fetchJokeFromEndpoints(View view) {
+        new FetchJokesTask(this).execute();
     }
 
     @Override
