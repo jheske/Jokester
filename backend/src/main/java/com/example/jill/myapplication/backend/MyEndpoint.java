@@ -12,27 +12,41 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
 
 import com.example.JokeTeller;
+import com.google.api.server.spi.config.Named;
 
 
-/** An endpoint class we are exposing */
+/**
+ * An endpoint class we are exposing
+ */
 @Api(
-  name = "myApi",
-  version = "v1",
-  namespace = @ApiNamespace(
-    ownerDomain = "backend.myapplication.jill.example.com",
-    ownerName = "backend.myapplication.jill.example.com",
-    packagePath=""
-  )
+        name = "myApi",
+        version = "v1",
+        namespace = @ApiNamespace(
+                ownerDomain = "backend.myapplication.jill.example.com",
+                ownerName = "backend.myapplication.jill.example.com",
+                packagePath = ""
+        )
 )
+
 public class MyEndpoint {
     JokeTeller jokeTeller = new JokeTeller();
-
-    /** Endpoint method that returns a joke **/
-    @ApiMethod(name = "getJoke")
-    public MyJoke getJoke() {
+    /**
+     * Endpoint method that returns a joke
+     **/
+    @ApiMethod(name = "getGoodJoke", path="goodjoke")
+    public MyJoke getGoodJoke() {
         MyJoke response = new MyJoke();
         String joke = jokeTeller.getJoke(Jokes.JOKE_TYPE.GOOD);
         response.setData(joke);
         return response;
     }
+
+    /** Endpoint method that returns a bad joke **/
+     @ApiMethod(name="getBadJoke", path="badjoke")
+     public MyJoke getBadJoke() {
+         MyJoke response = new MyJoke();
+        String joke = jokeTeller.getJoke(Jokes.JOKE_TYPE.BAD);
+        response.setData(joke);
+        return response;
+     }
 }

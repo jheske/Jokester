@@ -15,8 +15,7 @@ import java.io.IOException;
 /**
  * Created by jill on 1/13/16.
  */
-public class FetchJokesTask extends AsyncTask<Void, Void, String> {
-
+public class FetchJokesTask extends AsyncTask<Jokes.JOKE_TYPE, Void, String> {
     public interface jokeTaskListener {
         void onJokeReceived(String joke);
         void onError();
@@ -32,7 +31,8 @@ public class FetchJokesTask extends AsyncTask<Void, Void, String> {
     }
 
     @Override
-    protected String doInBackground(Void... params) {
+//    protected String doInBackground(Void... params) {
+    protected String doInBackground(Jokes.JOKE_TYPE... params) {
         if(myApiService == null) {  // Only do this once
             // This one is for testing against local backend server
             // Run the "backend" configuration and
@@ -59,7 +59,10 @@ public class FetchJokesTask extends AsyncTask<Void, Void, String> {
         }
 
         try {
-            return myApiService.getJoke().execute().getData();
+            if (params[0] == Jokes.JOKE_TYPE.GOOD)
+              return myApiService.getGoodJoke().execute().getData();
+            else
+              return myApiService.getBadJoke().execute().getData();
         } catch (IOException e) {
             return e.getMessage();
         }

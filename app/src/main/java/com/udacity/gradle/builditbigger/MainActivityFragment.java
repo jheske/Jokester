@@ -20,7 +20,7 @@ public class MainActivityFragment extends Fragment {
         View root = inflater.inflate(R.layout.fragment_main, container, false);
 
         //Delegate Ad display to paid and free versions
-        new AdHandler().displayBannerAd(root);
+        new JokeHandler().displayBannerAd(root);
         return root;
     }
 }

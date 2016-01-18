@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity
 
     public String mJoke;
     public final String JOKE_EXTRA = "JOKE_EXTRA";
-    private AdHandler mAdHandler;
+    private JokeHandler mJokeHandler;
     private ProgressBar mProgressSpinner;
 
     //https://developers.google.com/admob/android/interstitial
@@ -33,14 +33,14 @@ public class MainActivity extends AppCompatActivity
         mProgressSpinner = (ProgressBar)findViewById(R.id.progressBar);
         mProgressSpinner.setVisibility(View.GONE);
 
-        //All flavors have an AdHandler. Free version loads an
+        //All flavors have an JokeHandler. Free version loads an
         //ad while Paid version provides the event hooks but does nothing.
-        mAdHandler = new AdHandler();
+        mJokeHandler = new JokeHandler();
         //As per Android docs pre-load the ad for later display
         //Delegate to all flavors; free version loads an ad and
         //paid version doesn't so as not to waste time
         //loading ads user paid to remove
-        mAdHandler.loadInterstitialAd(this);
+        mJokeHandler.loadInterstitialAd(this);
     }
 
 
@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity
 
     public void fetchJokeFromEndpoints(View view) {
         mProgressSpinner.setVisibility(View.VISIBLE);
-        new FetchJokesTask(this).execute();
+        mJokeHandler.getJoke(this);
+        //new FetchJokesTask(this).execute(Jokes.JOKE_TYPE.BAD);
     }
 
     /**
@@ -82,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         mJoke = joke;
         //showProgressBar
         mProgressSpinner.setVisibility(View.GONE);
-        mAdHandler.displayInterstitialAd();
+        mJokeHandler.displayInterstitialAd();
     }
 
     @Override

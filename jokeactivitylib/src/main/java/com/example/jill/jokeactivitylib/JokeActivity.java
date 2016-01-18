@@ -14,6 +14,6 @@ public class JokeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_joke);
         JokeActivityFragment jokeFragment = (JokeActivityFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.joke_fragment);
-        jokeFragment.displayJoke("JokeActivity: " + joke);
+        jokeFragment.displayJoke(joke);
     }
 }
