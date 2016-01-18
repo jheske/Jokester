@@ -8,7 +8,6 @@ import java.lang.Override;
 public class AdHandler implements AdCallbackListener {
     IAdClosedListener mCallback;
 
-
     @Override
     public void loadInterstitialAd(Context context) {
         //no-op

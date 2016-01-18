@@ -17,3 +17,29 @@ allprojects {
         jcenter()
     }
 }
+
+task doAppengineRun() {
+    dependsOn ':backend:appengineRun'
+}
+
+task runConnectedCheck {
+    dependsOn ':app:connectedCheck'
+}
+task doAppengineStop() {
+    dependsOn ':backend:appengineStop'
+}
+
+runConnectedCheck.mustRunAfter doAppengineRun
+doAppengineStop.mustRunAfter runConnectedCheck
+
+task testJokester {
+    project(":backend").afterEvaluate {
+        app ->app.extensions.appengine.daemon = true
+    }
+    //Make sure backend gets evaluated before starting server
+    //and running tests
+    evaluationDependsOn(':backend')
+    dependsOn 'doAppengineRun'
+    dependsOn 'runConnectedCheck'
+    dependsOn 'doAppengineStop'
+}

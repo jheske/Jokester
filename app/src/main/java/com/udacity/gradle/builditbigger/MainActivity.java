@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.jill.jokeactivitylib.JokeActivity;
@@ -14,7 +15,6 @@ import com.example.jill.jokeactivitylib.JokeActivity;
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
  * https://developers.google.com/admob/android/interstitial
  * https://github.com/googleads/googleads-mobile-android-examples/tree/master/admob/InterstitialExample
- * https://github.com/bdiegel/android-nano-p4/blob/master/app/src/androidTest/java/com/udacity/gradle/builditbigger/JokeAsyncTaskTest.java
  */
 public class MainActivity extends AppCompatActivity
         implements FetchJokesTask.jokeTaskListener,IAdClosedListener {
@@ -22,12 +22,16 @@ public class MainActivity extends AppCompatActivity
     public String mJoke;
     public final String JOKE_EXTRA = "JOKE_EXTRA";
     private AdHandler mAdHandler;
+    private ProgressBar mProgressSpinner;
 
     //https://developers.google.com/admob/android/interstitial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mProgressSpinner = (ProgressBar)findViewById(R.id.progressBar);
+        mProgressSpinner.setVisibility(View.GONE);
 
         //All flavors have an AdHandler. Free version loads an
         //ad while Paid version provides the event hooks but does nothing.
@@ -62,6 +66,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     public void fetchJokeFromEndpoints(View view) {
+        mProgressSpinner.setVisibility(View.VISIBLE);
         new FetchJokesTask(this).execute();
     }
 
@@ -75,11 +80,14 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onJokeReceived(String joke) {
         mJoke = joke;
+        //showProgressBar
+        mProgressSpinner.setVisibility(View.GONE);
         mAdHandler.displayInterstitialAd();
     }
 
     @Override
     public void onError() {
+        mProgressSpinner.setVisibility(View.GONE);
         Toast.makeText(this, "Error retrieving joke from Google Endpoint", Toast.LENGTH_SHORT).show();
     }
 

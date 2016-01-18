@@ -6,11 +6,10 @@
 
 package com.example.jill.myapplication.backend;
 
+import com.example.Jokes;
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
-
-import javax.inject.Named;
 
 import com.example.JokeTeller;
 
@@ -28,11 +27,11 @@ import com.example.JokeTeller;
 public class MyEndpoint {
     JokeTeller jokeTeller = new JokeTeller();
 
-    /** A simple endpoint method that takes a name and says Hi back */
+    /** Endpoint method that returns a joke **/
     @ApiMethod(name = "getJoke")
-    public MyBean getJoke() {
-        MyBean response = new MyBean();
-        String joke = jokeTeller.getJoke();
+    public MyJoke getJoke() {
+        MyJoke response = new MyJoke();
+        String joke = jokeTeller.getJoke(Jokes.JOKE_TYPE.GOOD);
         response.setData(joke);
         return response;
     }
