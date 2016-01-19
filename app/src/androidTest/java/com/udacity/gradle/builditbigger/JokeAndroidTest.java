@@ -8,6 +8,8 @@ import android.test.ApplicationTestCase;
 import android.test.UiThreadTest;
 import android.util.Log;
 
+import com.example.Jokes;
+
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +28,7 @@ public class JokeAndroidTest extends AndroidTestCase
 
     @UiThreadTest
     public void testGetJoke() throws InterruptedException {
-        new FetchJokesTask(this).execute();
+        new FetchJokesTask(this).execute(Jokes.JOKE_TYPE.BAD);
         signal.await(30, TimeUnit.SECONDS);
     }
 

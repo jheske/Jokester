@@ -1,11 +1,14 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,12 +26,14 @@ public class MainActivity extends AppCompatActivity
     public final String JOKE_EXTRA = "JOKE_EXTRA";
     private JokeHandler mJokeHandler;
     private ProgressBar mProgressSpinner;
+    private Toolbar mToolbar;
 
     //https://developers.google.com/admob/android/interstitial
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setupToolbar();
 
         mProgressSpinner = (ProgressBar)findViewById(R.id.progressBar);
         mProgressSpinner.setVisibility(View.GONE);
@@ -43,6 +48,12 @@ public class MainActivity extends AppCompatActivity
         mJokeHandler.loadInterstitialAd(this);
     }
 
+
+    private void setupToolbar() {
+        // Set a Toolbar to replace the ActionBar.
+        mToolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(mToolbar);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

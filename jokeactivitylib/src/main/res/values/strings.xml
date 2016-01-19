@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Here\'s Your Joke!</string>
     <string name="joke_text">The joke goes here!</string>
+    <string name="joke_activity_label">Here is Your Joke!</string>
 </resources>
