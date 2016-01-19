@@ -18,7 +18,7 @@ Material Design, FREE and PAID flavors, AdMod integration, Java library, Android
 
 ## Features
 
-This project is designed to meet all of the requirements as per Udacity's rubric for P4.  Features may or may not be completed and include, but are not limited to:
+The original app comprised an activity with a banner ad and a button that purported to tell a joke, but just showed a toast message.  It did not offer any of the advanced features listed below.  I modified and redesigned designed it to meet all of the requirements as per Udacity's rubric for P4.  Features may or may not be completed and include, but are not limited to:
 
 Material Design conforms to Google's latest UI/UX standards. 
 
