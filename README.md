@@ -36,10 +36,10 @@ A backend server retrieves jokes from the Java library and passes them to the An
 
 ## Screenshots
 
-<img src="jokester-main-screen.png" alt="Jokester main screen, paid version" width="600"> 
-<img src="jokester-main-screen-free.png" alt="Jokester main screen, free version" width="600">
-<img src="jokester-interstitial-ad.png" alt="Jokester interstitial ad" width="600">
-<img src="jokester-joke.png" alt="Jokester joke screen" width="600">
+<img src="jokester-main-screen.png" alt="Jokester main screen paid version" width="300"> <img src="jokester-main-screen-paid.png" alt="Jokester main screen free version" width="300">
+
+
+<img src="jokester-interstitial-ad.png" alt="Jokester interstitial ad" width="300">  <img src="jokester-joke.png" alt="Jokester joke screen" width="300">
 
 ## build.gradle
 
